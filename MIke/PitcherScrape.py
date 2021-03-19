@@ -50,17 +50,17 @@ list_df_pitchers = []
 list_df_pitcher_stats = []
 
 for aref in aref_list[:TopN]:
-    print(aref)
     bio_dict = {}
     time.sleep(.5)
-    browser.click_link_by_href(aref)    
+    browser.click_link_by_href(aref)   
+    #browser.links.find_by_href(aref) 
     time.sleep(.5)
     bio = BeautifulSoup(browser.html,'html.parser')
 
     #Calculate player name
     bio_name = bio.find('div','pull-left primary-heading-subheading')
     player = bio_name.text.lstrip().split('\n')[0].rstrip()
-    print(player)
+    print(player,flush=True)
     bio_results = bio.find_all('span','bio-detail')
 
     #Get Player Bio information
@@ -78,11 +78,11 @@ for aref in aref_list[:TopN]:
 
     #Append Player Bio ijnformation into list of dataframe
     bio_dict = {"PLAYER":player,"AGE":age, "COLLEGE":college, "BATS":bats,"THROWS":throws}
-    print(bio_dict)
     bio_df = pd.DataFrame([bio_dict])
     list_df_pitchers.append(bio_df)
     
     #CLick thru to player stat page
+    #browser.links.find_by_href('/mlb/stats/' + aref.split('/')[3].split('?')[0])
     browser.click_link_by_href('/mlb/stats/' + aref.split('/')[3].split('?')[0])
     time.sleep(.5)
     stats_df = pd.read_html(browser.html)[0]
@@ -134,3 +134,5 @@ engine.execute('TRUNCATE TABLE public."PITCHER_STATS"')
 for pitcher in list_df_pitcher_stats:
     pitcher.to_sql('PITCHER_STATS', con = engine, if_exists= 'append', index = True)
 
+print("***************Success*****************")
+print(f"{TopN} Players Processed")

@@ -58,7 +58,7 @@ for aref in aref_list[:TopN]:
     #Calculate player name
     bio_name = bio.find('div','pull-left primary-heading-subheading')
     player = bio_name.text.lstrip().split('\n')[0].rstrip()
-    print(player)
+    print(player, flush=True)
     bio_results = bio.find_all('span','bio-detail')
     #Get Player Bio information
     college = ''
@@ -142,3 +142,6 @@ for hitter in list_df_hitter:
 engine.execute('TRUNCATE TABLE public."HITTER_STATS"')
 for hitter in list_df_hitter_stats:
     hitter.to_sql('HITTER_STATS', con = engine, if_exists= 'append', index = True)
+    
+print("***************Success*****************")
+print(f"{TopN} Players Processed")
