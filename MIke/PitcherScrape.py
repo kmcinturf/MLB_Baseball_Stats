@@ -82,12 +82,16 @@ for aref in aref_list[:TopN]:
     list_df_pitchers.append(bio_df)
     
     #CLick thru to player stat page
-    #browser.links.find_by_href('/mlb/stats/' + aref.split('/')[3].split('?')[0])
     browser.click_link_by_href('/mlb/stats/' + aref.split('/')[3].split('?')[0])
     time.sleep(.5)
     stats_df = pd.read_html(browser.html)[0]
     cols = stats_df.columns.droplevel(0)
     stats_df.set_axis(cols,axis='columns',inplace=True)
+    #Shoehi Oethani is a DH and Pitcher had to HTML tables.
+    if 'AB' in stats_df.columns:
+        stats_df=pd.read_html(browser.html)[1]
+        cols = stats_df.columns.droplevel(0)
+        stats_df.set_axis(cols,axis='columns',inplace=True)
     stats_df["PLAYER"] = player
     list_df_pitcher_stats.append(stats_df)
     time.sleep(.5)
@@ -121,7 +125,7 @@ for pitcher in list_df_pitcher_stats:
 engine = create_engine(f'postgresql://{username}:{password}@localhost:5432/{databasename}')
 conn = engine.connect()
 
-#Truncate and Insert to Corresponding Postgres tables
+#Truncate and Load  Postgres tables
 engine.execute('TRUNCATE TABLE public."PITCHER_RANKINGS"')
 pitching_rank_df.to_sql('PITCHER_RANKINGS', con = engine, if_exists= 'append', index = True)
 
