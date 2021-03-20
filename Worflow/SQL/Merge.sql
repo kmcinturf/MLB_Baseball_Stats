@@ -1,0 +1,16 @@
+pr."PLAYERPOS"
+10:12
+CREATE  VIEW  vw_pitcher_base_stats
+AS
+SELECT  ps."PLAYER" AS PLAYER,pb."AGE" AS AGE,pr."PLAYER_RANK" as player_rank, pr."PLAYERPOS" AS player_long,
+       COUNT(DISTINCT ps."SEASON") AS SEASONS, SUM("GS") AS GS, SUM("W") AS WINS,
+       SUM("SV") AS SAVES, SUM("IP") AS IP, SUM("SO") AS SO, SUM("R") AS RUNS, SUM("H") AS HITS
+FROM "PITCHER_STATS" ps
+   INNER JOIN
+     "PITCHER_BIO" pb
+ ON ps."PLAYER" = pb."PLAYER"
+   INNER JOIN
+     "PITCHER_RANKINGS" pr
+ ON pr."PLAYER" = pb."PLAYER"
+WHERE "SEASON" >= '2018'
+GROUP BY ps."PLAYER",pb."AGE",pr."PLAYER_RANK", pr."PLAYERPOS";
