@@ -129,7 +129,7 @@ for hitter in list_df_hitter_stats:
 engine = create_engine(f'postgresql://{username}:{password}@localhost:5432/{databasename}')
 conn = engine.connect()
 
-#Truncate and Insert to Corresponding Postgres tables
+#Truncate and  Load Corresponding Postgres tables
 # Truncate table before inserting
 engine.execute('TRUNCATE TABLE public."HITTER_RANKINGS"')
 hitter_rankings.to_sql('HITTER_RANKINGS', con = engine, if_exists = 'append', index = True )
