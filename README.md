@@ -6,7 +6,7 @@ In this project we have an upcoming fantasy baseball draft. Unfortunately, for t
 
 ## Set Up
 
-We have to different two different working scripts for starting pitchers and hitters. We used Jupyter Notebook as a starting point in order run code interactively for debugging purposes and developing proof of concept. Afterwards we converted our Jupyter Notebooks to Python script allowing it to run from the command line. Prior to running our Jupyter Notebook or Python file you must first run our [[DBL](SQL/DBL.sql). 
+We have to different two different working scripts for starting pitchers and hitters. We used Jupyter Notebook as a starting point in order run code interactively for debugging purposes and developing proof of concept. Afterwards we converted our Jupyter Notebooks to Python script allowing it to run from the command line. Prior to running our Jupyter Notebook or Python file you must first run our [DBL](SQL/DBL.sql). 
 
 ![ERD](Images/MLB.5.jpg)
 
